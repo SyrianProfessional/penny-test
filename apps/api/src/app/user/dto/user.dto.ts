@@ -1,6 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Transform } from 'class-transformer';
-import { IsString, MaxLength, MinLength, IsEmail } from 'class-validator';
+import { IsEmail, IsString, MaxLength, MinLength } from 'class-validator';
 
 export class LoginUserDto {
   @IsString()
@@ -9,7 +8,7 @@ export class LoginUserDto {
   email: string;
 
   @IsString()
-  @MinLength(8, { message: 'Password is too short (8 characters min)' })
+  @MinLength(4, { message: 'Password is too short (4 characters min)' })
   @MaxLength(20, { message: 'Password is too long (20 characters max)' })
   @ApiProperty({ required: true, default: 'password@123' })
   password: string;
@@ -31,7 +30,7 @@ export class SignupUserDto {
   email: string;
 
   @IsString()
-  @MinLength(8, { message: 'Password is too short (8 characters min)' })
+  @MinLength(4, { message: 'Password is too short (4 characters min)' })
   @MaxLength(20, { message: 'Password is too long (20 characters max)' })
   @ApiProperty({ required: true, default: 'password@123' })
   password: string;
@@ -50,8 +49,14 @@ export class ResetPasswordDto {
   token: string;
 
   @IsString()
-  @MinLength(8, { message: 'Password is too short (8 characters min)' })
+  @MinLength(4, { message: 'Password is too short (4 characters min)' })
   @MaxLength(20, { message: 'Password is too long (20 characters max)' })
   @ApiProperty({ required: true, default: 'password@123' })
   password: string;
+}
+
+export class CheckResetPasswordTokenDto {
+  @IsString()
+  @ApiProperty({ required: true, default: '1234' })
+  token: string;
 }

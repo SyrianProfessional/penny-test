@@ -4,7 +4,7 @@ import { config } from 'apps/api/src/config';
 import { QueryDto } from 'apps/api/src/dto/query.dto';
 import { IList } from 'apps/api/src/interfaces/list.interface';
 import { IQuery } from 'apps/api/src/interfaces/query.interface';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import { TranslationService } from '../../translation/translation.service';
 import { UserService } from '../../user/services/user.service';
 import { ProductDto } from '../dto/product.dto';
@@ -37,7 +37,6 @@ export class ProductService {
       const pageSize = size > config.limit ? config.limit : size;
       this.productModel
         .aggregate([
-          { $unwind: '$user' },
           { $match: query },
           {
             $facet: {
@@ -90,27 +89,28 @@ export class ProductService {
     });
   }
 
-  async getAllProducts(req , _query: QueryDto) {
+  async getAllProducts(req, _query: QueryDto) {
     const { searchWord } = _query;
 
     const query = {
-
       'user._id': req.user._id,
-      // $or: [{ "title.en": { $regex: searchWord || "", $options: "$i" } }],
+      $or: [
+        { title: { $regex: searchWord || '', $options: '$i' } },
+        { description: { $regex: searchWord || '', $options: '$i' } },
+        { 'user.firstname': { $regex: searchWord || '', $options: '$i' } },
+        { 'user.lastname': { $regex: searchWord || '', $options: '$i' } },
+        { 'user.email': { $regex: searchWord || '', $options: '$i' } },
+      ],
     };
 
-    const products = await this.getProductAggregate(
-      query,
-      req,
-      'list',
-      'getCategorySuccess',
-      'errorOnGetCategory'
-    );
+    const products = await this.getProductAggregate(query, req, 'list', '', '');
 
     return products;
   }
 
   async addNewProduct(req, body: ProductDto) {
+   
+
     const newProduct = await this.productModel.create({
       ...body,
       user: this.userService.returnUser(req.user),
@@ -128,7 +128,7 @@ export class ProductService {
     const existProduct = await this.productModel.findOne({ _id });
     if (!existProduct) throw new ConflictException(productNotFound);
 
-    if (existProduct.user?._id != req.user._id)
+    if (existProduct.user?._id + '' != req.user._id + '')
       throw new ConflictException(notAllowed);
 
     const editedProduct = await this.productModel.findOneAndUpdate(
@@ -140,13 +140,13 @@ export class ProductService {
     return editedProduct;
   }
 
-  async getOneProduct(req, _id) {
+  async getOneProduct(req, _id: string) {
     return await this.getProductAggregate(
-      { _id, 'user._id': req.user._id },
+      { _id: new Types.ObjectId(_id), 'user._id': req.user._id },
       req,
       'one',
-      'getCategorySuccess',
-      'errorOnGetCategory'
+      '',
+      ''
     );
   }
 
@@ -159,7 +159,7 @@ export class ProductService {
     const existProduct = await this.productModel.findOne({ _id });
     if (!existProduct) throw new ConflictException(productNotFound);
 
-    if (existProduct.user?._id != req.user._id)
+    if (existProduct.user?._id + '' != req.user._id + '')
       throw new ConflictException(notAllowed);
 
     return await this.productModel.findOneAndDelete({ _id: req.params.id });

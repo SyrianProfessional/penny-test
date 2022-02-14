@@ -1,0 +1,64 @@
+<form nz-form [formGroup]="form" class="login-form" autocomplete="off">
+  <nz-form-item>
+    <nz-form-control nzHasFeedback [nzErrorTip]="emailError">
+      <input
+        nz-input
+        formControlName="email"
+        placeholder="{{ 'email' | translate }}"
+        type="email"
+      />
+      <ng-template #emailError let-control>
+        <ng-container *ngIf="validForm('email', 'email')">{{
+          'mustBeEmail' | translate
+        }}</ng-container>
+        <ng-container *ngIf="validForm('email', 'required')">{{
+          'required' | translate
+        }}</ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-control nzHasFeedback [nzErrorTip]="emailError">
+      <input
+        nz-input
+        formControlName="password"
+        placeholder="{{ 'password' | translate }}"
+        type="password"
+      />
+      <ng-template #emailError let-control>
+        <ng-container *ngIf="validForm('password', 'required')">{{
+          'required' | translate
+        }}</ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+
+  <div nz-row class="login-form-margin">
+    <div nz-col [nzSpan]="12">
+      <a class="login-form-forgot" routerLink="/auth/forget-password"
+        >Forgot password</a
+      >
+    </div>
+  </div>
+  <div nz-row class="login-form-margin">
+    <div nz-col [nzSpan]="12">
+      <a class="login-form-forgot" routerLink="/auth/reset-password/1234"
+        >test reset password</a
+      >
+    </div>
+  </div>
+  <button
+    nz-button
+    class="login-form-button login-form-margin"
+    [nzType]="'primary'"
+    [nzType]="'primary'"
+    [disabled]="!form.valid"
+    [nzLoading]="loading"
+    (click)="login()"
+  >
+    Log in
+  </button>
+  Or
+  <a routerLink="/auth/signup">register now!</a>
+</form>

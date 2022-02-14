@@ -9,7 +9,7 @@ export interface IUser extends Document {
 
   resetPasswordToken?: string;
   resetPasswordExpires?: Date;
-  
+
   token: string;
   loggedInAt: Date;
 }

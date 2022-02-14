@@ -15,7 +15,7 @@ import { UserModule } from './user/user.module';
 
     // my modules
     UserModule,
-    ProductModule
+    ProductModule,
   ],
   controllers: [],
   providers: [],

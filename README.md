@@ -1,94 +1,70 @@
-
-
-# PennyTest
-
-This project was generated using [Nx](https://nx.dev).
-
-<p style="text-align: center;"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="450"></p>
-
-🔎 **Smart, Fast and Extensible Build System**
-
-## Adding capabilities to your workspace
-
-Nx supports many plugins which add capabilities for developing different types of applications and different tools.
-
-These capabilities include generating applications, libraries, etc as well as the devtools to test, and build projects as well.
-
-Below are our core plugins:
-
-- [React](https://reactjs.org)
-  - `npm install --save-dev @nrwl/react`
-- Web (no framework frontends)
-  - `npm install --save-dev @nrwl/web`
-- [Angular](https://angular.io)
-  - `npm install --save-dev @nrwl/angular`
-- [Nest](https://nestjs.com)
-  - `npm install --save-dev @nrwl/nest`
-- [Express](https://expressjs.com)
-  - `npm install --save-dev @nrwl/express`
-- [Node](https://nodejs.org)
-  - `npm install --save-dev @nrwl/node`
-
-There are also many [community plugins](https://nx.dev/community) you could add.
-
-## Generate an application
-
-Run `nx g @nrwl/react:app my-app` to generate an application.
-
-> You can use any of the plugins above to generate applications as well.
-
-When using Nx, you can create multiple applications and libraries in the same workspace.
-
-## Generate a library
-
-Run `nx g @nrwl/react:lib my-lib` to generate a library.
-
-> You can also use any of the plugins above to generate libraries as well.
-
-Libraries are shareable across libraries and applications. They can be imported from `@penny-test/mylib`.
-
-## Development server
-
-Run `nx serve my-app` for a dev server. Navigate to http://localhost:4200/. The app will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `nx g @nrwl/react:component my-component --project=my-app` to generate a new component.
-
-## Build
-
-Run `nx build my-app` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `nx test my-app` to execute the unit tests via [Jest](https://jestjs.io).
-
-Run `nx affected:test` to execute the unit tests affected by a change.
-
-## Running end-to-end tests
-
-Run `nx e2e my-app` to execute the end-to-end tests via [Cypress](https://www.cypress.io).
-
-Run `nx affected:e2e` to execute the end-to-end tests affected by a change.
-
-## Understand your workspace
-
-Run `nx graph` to see a diagram of the dependencies of your projects.
-
-## Further help
-
-Visit the [Nx Documentation](https://nx.dev) to learn more.
+# Penny Test For Ashraf Zidane
 
 
 
-## ☁ Nx Cloud
 
-### Distributed Computation Caching & Distributed Task Execution
+this project is a NX workspace with Nest js And Angular projects, for the database i using the MongoDB with atlas db
 
-<p style="text-align: center;"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-cloud-card.png"></p>
+firstly the envirmoents is:
 
-Nx Cloud pairs with Nx in order to enable you to build and test code more rapidly, by up to 10 times. Even teams that are new to Nx can connect to Nx Cloud and start saving time instantly.
 
-Teams using Nx gain the advantage of building full-stack applications with their preferred framework alongside Nx’s advanced code generation and project dependency graph, plus a unified experience for both frontend and backend developers.
+```sh
+# Server
+DATABASE_CONNECTION=mongodb+srv://ashraf:zidane@cluster0.mjxk6.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
+# DATABASE_CONNECTION=mongodb://localhost/penny
+PORT=3333
+JWT_SECRET=penny
+JWT_EXPIRES_IN=8
 
-Visit [Nx Cloud](https://nx.app/) to learn more.
+# Swagger
+SWAGGER_TITLE=Penny Test Project 
+SWAGGER_DESCRIPTION=for Ashraf Zidane Test 
+SWAGGER_TAG=Penny Auth Project
+
+```
+
+if you want to see the apis and test it you can see the swagger file:  (http://localhost:3333/swagger/#/)
+
+to run the projects :
+
+```sh
+# Nest js :  nx serve --project=api
+# Angular: nx serve --project=frontend --port 4300  // or you can put any port you want
+```
+
+so lets talk about the task:
+
+#### Task Goal: 
+Build an end-to-end responsive web app which consumes an api, lists the data fromthe database and with a web form that sends data via a POST request.
+#### Technology: 
+MEAN Stack, Use Nx.dev to create a mono repo, Use Angular for UI and NGRX
+for state management and NestJS for backend API.
+#### Task Duration: 2 days
+#### Requirements:
+Create a signup, sign in and sign out web app that allows users to create
+accounts and have them registered as new users. The app should identify registered users and
+ask them to sign in. Once the user signed in they should remain signed in for 8-hours and then
+logged out automatically unless they sign out promptly. Push your project code to GitHub and
+submit a recording demonstrating the app functionality as well as code walkthrough.
+#### Bounty points:
+- Design and implement “forgot password” feature
+- Display a list of data visible only for logged in users, the list of data can be
+users/products when the user login is successful
+- Use Atlas mongodb to host your database online
+- Deploy your app to GCP
+
+so:
+- for the auth (signin, signup, forget password, reset password and get the users how loggedin) into the users folder 
+- i handled the session time and if you didnt loggedin to the server for 8 houres the session will expired you can see the user guard in the server project
+- for the forget password i handle the token that will generate when ask a new password but i put it a static as 1234 for test and you can test it by the reset-password router in the frontend
+- for display all data in the frontend i make a crud for products and the user list after login 
+- i installd a packages and handle it for more than language but i couldent write all the words becuase the time of task
+- i used the NGRX as example in users for list so i init the store and made the state, reducer, actions and selectors and made it as observable you can refresh it from any where in the code just dispatch to the store
+- i build it and test the build before push code
+- finaly i write some comments and make the names and variable understaned and i hope its good
+
+
+thanks.
+
+
+

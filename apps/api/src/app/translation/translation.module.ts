@@ -4,7 +4,6 @@ import * as path from 'path';
 import { TranslationService } from './translation.service';
 
 const appRoot = require('app-root-path').path;
-console.log('appRoot', appRoot);
 
 @Module({
   imports: [

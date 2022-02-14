@@ -1,0 +1,50 @@
+<form nz-form [formGroup]="form" class="login-form" autocomplete="off">
+  <nz-form-item>
+    <nz-form-control nzHasFeedback [nzErrorTip]="titleError">
+      <input
+        nz-input
+        formControlName="title"
+        placeholder="{{ 'title' | translate }}"
+        type="text"
+      />
+      <ng-template #titleError let-control>
+      
+        <ng-container *ngIf="validForm('title', 'required')">{{
+          'required' | translate
+        }}</ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-control nzHasFeedback [nzErrorTip]="descriptionError">
+      <textarea
+        nz-input
+        formControlName="description"
+        placeholder="{{ 'description' | translate }}"
+        type=""
+        rows="5"
+      ></textarea>
+      <ng-template #descriptionError let-control>
+        <ng-container *ngIf="validForm('description', 'required')">{{
+          'required' | translate
+        }}</ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+
+
+
+  <button
+    nz-button
+    class="login-form-button login-form-margin"
+    [nzType]="'primary'"
+    [nzType]="'primary'"
+    [disabled]="!form.valid"
+    [nzLoading]="loading"
+    Ø
+    (click)="login()"
+  >
+    {{!id ?  'add product' : 'edit product'}}
+  </button>
+</form>

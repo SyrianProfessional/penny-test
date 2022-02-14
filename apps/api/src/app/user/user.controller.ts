@@ -3,21 +3,29 @@ import {
   Controller,
   Get,
   Post,
+  Query,
   Request,
   UseGuards,
-  ValidationPipe
+  ValidationPipe,
 } from '@nestjs/common';
-import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { config } from '../../config';
+import { QueryDto } from '../../dto/query.dto';
 import { IResponse } from '../../interfaces/response.interface';
 import { TranslationService } from '../translation/translation.service';
-import { ForgetPasswordDto, LoginUserDto, ResetPasswordDto, SignupUserDto } from './dto/user.dto';
+import {
+  CheckResetPasswordTokenDto,
+  ForgetPasswordDto,
+  LoginUserDto,
+  ResetPasswordDto,
+  SignupUserDto,
+} from './dto/user.dto';
 import { UserGuard } from './guards/auth.guard';
 import { LocalStrategieGuard } from './guards/local.guard';
 import { UserService } from './services/user.service';
 
 @ApiTags(config.tables.User)
-@Controller("user")
+@Controller('user')
 export class UserController {
   constructor(
     private translateService: TranslationService,
@@ -34,7 +42,6 @@ export class UserController {
       message: await this.translateService.translate('signupSuccessfully'),
     };
   }
-
 
   @Post('/forget-password')
   async forgetPassword(
@@ -56,15 +63,22 @@ export class UserController {
       message: await this.translateService.translate('signupSuccessfully'),
     };
   }
+  @Post('/check-reset-password')
+  async checkResetPasswordTokenD(
+    @Request() req,
+    @Body(ValidationPipe) body: CheckResetPasswordTokenDto
+  ): Promise<IResponse> {
+    return {
+      data: await this.userService.checkResetPasswordToken(req, body),
+      message: await this.translateService.translate('signupSuccessfully'),
+    };
+  }
 
   @UseGuards(LocalStrategieGuard)
   @Post('/signin')
   async signIn(@Request() req, @Body() body: LoginUserDto): Promise<IResponse> {
     return {
-      data: {
-        user: req.user,
-        token: req.token,
-      },
+      data: req.user,
       message: await this.translateService.translate('signinSuccessfully'),
     };
   }
@@ -86,6 +100,19 @@ export class UserController {
     return {
       data: await this.userService.logout(req),
       message: await this.translateService.translate('logoutSuccessfully'),
+    };
+  }
+
+  @ApiBearerAuth()
+  @UseGuards(UserGuard)
+  @Get('/get-all-users')
+  async getAllusers(
+    @Request() req,
+    @Query() query: QueryDto
+  ): Promise<IResponse> {
+    return {
+      data: await this.userService.getAllUsers(req, query),
+      message: await this.translateService.translate('signupSuccessfully'),
     };
   }
 }

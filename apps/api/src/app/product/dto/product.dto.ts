@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsOptional, IsString, IsMongoId } from 'class-validator';
+import { IsMongoId, IsOptional, IsString } from 'class-validator';
 
 export class ProductDto {
   @IsString()
@@ -15,5 +15,4 @@ export class ProductParamsDto {
   @IsMongoId()
   @ApiProperty({ required: true, default: '' })
   id: string;
-
 }

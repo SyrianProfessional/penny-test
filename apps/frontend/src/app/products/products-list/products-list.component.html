@@ -1,0 +1,49 @@
+<input
+  nz-input
+  [(ngModel)]="searchWord"
+  placeholder="{{ 'searchHere' | translate }}"
+  (keyup.enter)="search()"
+/>
+
+<a routerLink="/products/add-product">add new product</a>
+
+<nz-table
+  #rowSelectionTable
+  nzShowSizeChanger
+  [nzLoading]="loading"
+  [nzData]="products"
+  [nzPageSize]="pageSize"
+  [nzTotal]="total"
+  (nzPageIndexChange)="changePage($event)"
+  [nzFrontPagination]="false"
+  (nzPageSizeChange)="pageSizeChange($event)"
+>
+  <thead>
+    <tr>
+      <th>title</th>
+      <th>description</th>
+      <th>firstname</th>
+      <th>lastname</th>
+      <th>email</th>
+      <th>actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let data of rowSelectionTable.data">
+      <td>{{ data.title }}</td>
+      <td>{{ data.description }}</td>
+      <td>{{ data.user?.firstname }}</td>
+      <td>{{ data.user?.lastname }}</td>
+      <td>{{ data.user?.email }}</td>
+      <td>
+        <a
+          nz-popconfirm
+          nzPopconfirmTitle="Sure to delete?"
+          (nzOnConfirm)="deleteProduct(data._id)"
+          >Delete</a
+        >
+        <a [routerLink]="'/products/edit-product/' + data._id">Edit</a>
+      </td>
+    </tr>
+  </tbody>
+</nz-table>

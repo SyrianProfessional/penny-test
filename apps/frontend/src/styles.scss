@@ -1,1 +1,65 @@
 /* You can add global styles to this file, and also import other style files */
+@import "~ng-zorro-antd/ng-zorro-antd.min.css";
+.logo {
+    width: 120px;
+    height: 31px;
+    background: rgba(255, 255, 255, 0.2);
+    margin: 16px 30px 16px 0;
+    float: left;
+  }
+
+  .header-menu {
+    line-height: 64px;
+  }
+
+  .sider-menu {
+    height: 100%;
+    border-right: 0;
+  }
+
+  .inner-layout {
+    padding: 0 24px 24px;
+  }
+
+  nz-breadcrumb {
+    margin: 16px 0;
+  }
+
+  nz-content {
+    background: #fff;
+    padding: 24px;
+    min-height: 280px;
+  }
+
+  .error-text {
+      color: red;
+      font-size: 10px;
+  }
+
+  .login-form {
+    max-width: 300px;
+  }
+
+  .login-form-margin {
+    margin-bottom: 16px;
+  }
+
+  .login-form-forgot {
+    float: right;
+  }
+
+  .login-form-button {
+    width: 100%;
+  }
+
+  .white {
+    color: #fff !important;
+  }
+
+  .mx-2 {
+    margin-inline-end: 20px;
+  }
+
+  .ant-message-notice-content {
+    margin-top: 50px !important;
+  }
